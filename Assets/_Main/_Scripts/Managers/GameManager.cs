@@ -17,6 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     [Header("General")]
     [SerializeField] Dice player;
+    
 
 
     [Header("Clip")]
@@ -31,6 +32,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     AudioSource audioSource;
     AnimateUI endUI;
     InputControl inputControl;
+    UIManager UImanagerr;
 
     [HideInInspector] public Material tile1;
     [HideInInspector] public Material tile2;
@@ -48,7 +50,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         // blackCurtain.reachMax.AddListener(ActualLevelChange);
         audioSource = GetComponent<AudioSource>();
         inputControl = new InputControl();
-
+        
         tile1 = Resources.Load<Material>("Shadow mat/tile 1");
         tile2 = Resources.Load<Material>("Shadow mat/tile 2");
         tile3 = Resources.Load<Material>("Shadow mat/tile 3");
@@ -82,6 +84,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void RestartLevel(string msg = null){
         player.ToggleActiveState(false);
+        
 
         if(string.IsNullOrEmpty(msg))
             msg = $"Level {loadedLevelIndex+1}";
@@ -89,10 +92,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         LoadLevel(loadedLevelIndex, msg);
     }
 
-    public void OpenLink(){
-        Application.OpenURL("https://pixabay.com/sound-effects/");
-    }
-
+   
     public void QuitGame(){
         Application.Quit();
     }
@@ -126,6 +126,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         BackgroundMusic.Instance.InGame();
+
+
     }
 
     //[Called by animator event after scene is covered properly]
@@ -175,6 +177,7 @@ public class GameManager : SingletonBehaviour<GameManager>
                 if(!currentLevelCompleted){
                     audioSource.PlayOneShot(negativeClip);
                     RestartLevel("Out of moves");
+                    UImanagerr.DeadPanel.SetActive(false);
                 }
             });
         }

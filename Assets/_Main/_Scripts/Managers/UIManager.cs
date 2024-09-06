@@ -14,7 +14,8 @@ public class UIManager : SingletonBehaviour<UIManager>
     [SerializeField] GameObject InGamePanel;
     [SerializeField] GameObject exitToMainMenu;
     [SerializeField] GameObject exitGame;
-    
+    public GameObject DeadPanel;
+
 
     [Space]
     [SerializeField] TextMeshProUGUI remaingingMoves_txt;
@@ -33,7 +34,7 @@ public class UIManager : SingletonBehaviour<UIManager>
         inputControl = new InputControl();
         inputControl.GameControl.Enable();
         inputControl.GameControl.Back.performed += OnPerformBack;
-
+        
         SwitchState(UIState.Menu);
     }
 
@@ -42,20 +43,20 @@ public class UIManager : SingletonBehaviour<UIManager>
         switch (toState)
         {
             case UIState.Menu:
-            
+            DeadPanel.SetActive(false);
             InGamePanel.SetActive(false);
             MenuPanel.SetActive(true);
             exitToMainMenu.SetActive(false);
             break;
 
             case UIState.InGame:
-            
+            DeadPanel.SetActive(false);
             InGamePanel.SetActive(true);
             MenuPanel.SetActive(false);
             break;
 
             case UIState.Finish:
-            
+            DeadPanel.SetActive(false);
             InGamePanel.SetActive(false);
             MenuPanel.SetActive(false);
             break;
@@ -71,7 +72,10 @@ public class UIManager : SingletonBehaviour<UIManager>
     }
 
     public void UpdateRemainingMoves(int moves){
-        if(moves < 0) remaingingMoves_txt.text = "∞";
+        if(moves < 1)
+        {
+            DeadPanel.SetActive(true);
+        }
         else remaingingMoves_txt.text = moves.ToString();
     }
 
