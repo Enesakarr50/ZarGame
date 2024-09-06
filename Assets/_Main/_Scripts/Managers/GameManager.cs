@@ -126,8 +126,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         BackgroundMusic.Instance.InGame();
-
-
     }
 
     //[Called by animator event after scene is covered properly]
@@ -177,7 +175,6 @@ public class GameManager : SingletonBehaviour<GameManager>
                 if(!currentLevelCompleted){
                     audioSource.PlayOneShot(negativeClip);
                     RestartLevel("Out of moves");
-                    UImanagerr.DeadPanel.SetActive(false);
                 }
             });
         }
