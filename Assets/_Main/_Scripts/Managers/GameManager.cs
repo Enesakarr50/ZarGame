@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    #region  Variable
-    //------------------------------------//
+   
     #if UNITY_EDITOR
     // int moveCountsAfterClear;
 
@@ -44,15 +43,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     int remainMoves;
     bool currentLevelCompleted;
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Unity Method
-    //------------------------------------//
-
     private void Awake() {
         player.onPlayerMove.AddListener(OnPlayerMove);
         // blackCurtain.reachMax.AddListener(ActualLevelChange);
@@ -81,15 +71,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         inputControl.GameControl.FinishGame.performed += (c) => UIManager.Instance.SwitchState(UIState.Finish);
     }
 
-
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Public
-    //------------------------------------//
 
     public void PlayerActiveToggle(bool isOn){
         player.ToggleActiveState(isOn);
@@ -128,15 +109,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         LoadLevel(loadedLevelIndex-1, "Previous Level " + (loadedLevelIndex));
     }
 // #endif
-    //------------------------------------//
-    #endregion
+ 
 
-
-
-
-    #region  Private
-    //------------------------------------//
-    
     public void LoadLevel(int i, string msg){
         // Debug.Log("Load level: "+ i + " Level.Length" + levels.Length);
 
@@ -178,8 +152,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         UIManager.Instance.UpdateLevelNumber((loadedLevelIndex+1)%LevelList.Instance.Length);
         UIManager.Instance.SwitchState(UIState.InGame);
 
-        // [Show tutorial video in first level only]
-        if(loadedLevelIndex==0) UIManager.Instance.ShowTutorialVideo();
+        
     }
 
     private void OnPlayerMove(){
@@ -225,7 +198,4 @@ public class GameManager : SingletonBehaviour<GameManager>
         });
     }
 
-    //------------------------------------//
-    #endregion
-    
 }

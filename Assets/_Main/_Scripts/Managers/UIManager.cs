@@ -8,16 +8,13 @@ using UnityEngine.UI;
 
 public class UIManager : SingletonBehaviour<UIManager>
 {
-    #region  Variable
-    //------------------------------------//
-
+    
     [Header("General")]
     [SerializeField] GameObject MenuPanel;
     [SerializeField] GameObject InGamePanel;
-    [SerializeField] GameObject FinishPanel;
     [SerializeField] GameObject exitToMainMenu;
     [SerializeField] GameObject exitGame;
-    [SerializeField] GameObject tutorialVideo;
+    
 
     [Space]
     [SerializeField] TextMeshProUGUI remaingingMoves_txt;
@@ -29,54 +26,36 @@ public class UIManager : SingletonBehaviour<UIManager>
     InputControl inputControl;
     UIState currentState;
 
-    //------------------------------------//
-    #endregion
 
 
-
-
-    #region  Unity Method
-    //------------------------------------//
 
     private void Awake() {
         inputControl = new InputControl();
         inputControl.GameControl.Enable();
         inputControl.GameControl.Back.performed += OnPerformBack;
 
-        tutorialVideo.GetComponent<Button>().onClick.AddListener(() => {
-            tutorialVideo.SetActive(false);
-        });
-
         SwitchState(UIState.Menu);
     }
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Public
-    //------------------------------------//
-    
+  
     public void SwitchState(UIState toState){
         switch (toState)
         {
             case UIState.Menu:
-            FinishPanel.SetActive(false);
+            
             InGamePanel.SetActive(false);
             MenuPanel.SetActive(true);
             exitToMainMenu.SetActive(false);
             break;
 
             case UIState.InGame:
-            FinishPanel.SetActive(false);
+            
             InGamePanel.SetActive(true);
             MenuPanel.SetActive(false);
             break;
 
             case UIState.Finish:
-            FinishPanel.SetActive(true);
+            
             InGamePanel.SetActive(false);
             MenuPanel.SetActive(false);
             break;
@@ -85,10 +64,7 @@ public class UIManager : SingletonBehaviour<UIManager>
         currentState = toState;
     }
 
-    public void ShowTutorialVideo(){
-        tutorialVideo.SetActive(true);
-    }
-
+   
     public void ShowCover(string msg, Action onCoverMax){
         sceneCover.gameObject.SetActive(true);
         sceneCover.StartCover(msg, () => onCoverMax.Invoke());
@@ -107,15 +83,8 @@ public class UIManager : SingletonBehaviour<UIManager>
         ShowCover("Main Menu", () => SwitchState(UIState.Menu));
     }
 
-    //------------------------------------//
-    #endregion
+   
 
-
-
-
-    #region  Private
-    //------------------------------------//
-    
     private void OnPerformBack(InputAction.CallbackContext c){
         switch (currentState)
         {
@@ -133,9 +102,7 @@ public class UIManager : SingletonBehaviour<UIManager>
         }
     }
 
-    //------------------------------------//
-    #endregion
-    
+   
 }
 
 public enum UIState{
