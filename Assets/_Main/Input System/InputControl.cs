@@ -203,6 +203,24 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""28caa3f0-6a3e-4173-bd6a-e171096965cc"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""01998730-b06e-45f6-808c-1f52fa1a7f29"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -271,6 +289,28 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97346e69-c134-4e58-a593-4fc5ff02c4d4"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a78a830-f40a-4098-a060-54f6dae864ac"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +330,8 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         m_GameControl_Restart = m_GameControl.FindAction("Restart", throwIfNotFound: true);
         m_GameControl_FinishGame = m_GameControl.FindAction("FinishGame", throwIfNotFound: true);
         m_GameControl_Back = m_GameControl.FindAction("Back", throwIfNotFound: true);
+        m_GameControl_Look = m_GameControl.FindAction("Look", throwIfNotFound: true);
+        m_GameControl_Scroll = m_GameControl.FindAction("Scroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -426,6 +468,8 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameControl_Restart;
     private readonly InputAction m_GameControl_FinishGame;
     private readonly InputAction m_GameControl_Back;
+    private readonly InputAction m_GameControl_Look;
+    private readonly InputAction m_GameControl_Scroll;
     public struct GameControlActions
     {
         private @InputControl m_Wrapper;
@@ -435,6 +479,8 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         public InputAction @Restart => m_Wrapper.m_GameControl_Restart;
         public InputAction @FinishGame => m_Wrapper.m_GameControl_FinishGame;
         public InputAction @Back => m_Wrapper.m_GameControl_Back;
+        public InputAction @Look => m_Wrapper.m_GameControl_Look;
+        public InputAction @Scroll => m_Wrapper.m_GameControl_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_GameControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -459,6 +505,12 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         private void UnregisterCallbacks(IGameControlActions instance)
@@ -478,6 +530,12 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         public void RemoveCallbacks(IGameControlActions instance)
@@ -509,5 +567,7 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         void OnRestart(InputAction.CallbackContext context);
         void OnFinishGame(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
 }

@@ -8,21 +8,11 @@ using UnityEditor;
 
 public class AnimateUI : MonoBehaviour
 {
-    #region  Variable
-    //------------------------------------//
-
+   
     RectTransform rectTransform;
     Vector2 size;
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Unity Method
-    //------------------------------------//
-
+    
     private void Awake() {
         rectTransform = GetComponent<RectTransform>();
 
@@ -34,15 +24,6 @@ public class AnimateUI : MonoBehaviour
         ShowPanel();
     }
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Public
-    //------------------------------------//
-    
     public void ShowPanel(){
         // Sequence inAndOut = DOTween.Sequence();
         // inAndOut.Append(rectTransform.DOAnchorPosY(0, 0.7f));
@@ -52,18 +33,6 @@ public class AnimateUI : MonoBehaviour
         rectTransform.DOAnchorPosY(0, 1f);
     }
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Private
-    //------------------------------------//
-
-    //------------------------------------//
-    #endregion
-    
     
 }
 

@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class TileGuide : MonoBehaviour
 {
-    #region  Variable
-    //------------------------------------//
+    
     MeshRenderer mesh;
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Unity Method
-    //------------------------------------//
+   
 
     private void Awake() {
         mesh = GetComponent<MeshRenderer>();
@@ -52,29 +44,6 @@ public class TileGuide : MonoBehaviour
         }
     }
 
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Public
-    //------------------------------------//
     
-    
-
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region  Private
-    //------------------------------------//
-    
-    
-
-    //------------------------------------//
-    #endregion
     
 }

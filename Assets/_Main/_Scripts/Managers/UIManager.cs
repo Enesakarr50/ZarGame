@@ -15,7 +15,7 @@ public class UIManager : SingletonBehaviour<UIManager>
     [SerializeField] GameObject exitToMainMenu;
     [SerializeField] GameObject exitGame;
     public GameObject DeadPanel;
-
+    public GameObject Skill;
 
     [Space]
     [SerializeField] TextMeshProUGUI remaingingMoves_txt;
@@ -85,6 +85,12 @@ public class UIManager : SingletonBehaviour<UIManager>
 
     public void ExitToMainMenu(){
         ShowCover("Main Menu", () => SwitchState(UIState.Menu));
+    }
+
+    public void SkillPanel()
+    {
+
+        Skill.SetActive(true);
     }
 
    

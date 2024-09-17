@@ -34,7 +34,7 @@ public class LevelData_SO : ScriptableObject
 
         Debug.Log($"<color=white>Unlocked: {unlockedLevels}</color>");
 
-        // unlockedLevels = "0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1"
+         unlockedLevels = "0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1";
         if(!noLevlDataFound){
             int i = 0;
 
@@ -48,8 +48,8 @@ public class LevelData_SO : ScriptableObject
         AutoFillLevelData();
     }
 
-    public void AutoFillLevelData(){
-        // Debug.Log($"<color=#ebe134>--- Auto fill level data ---</color>");
+    public void AutoFillLevelData()
+    {
         levels.Clear();
 
         counter = 1;
@@ -62,43 +62,49 @@ public class LevelData_SO : ScriptableObject
 
         StringBuilder rawString = new StringBuilder();
 
-        foreach(var prefab in prefabs){
+        foreach (var prefab in prefabs)
+        {
             int index = counter - 1;
 
             var info = new LevelInfo();
             info.prefab = prefab;
             info.id = counter++;
-            
-            // Debug.Log($"<color=green>Thumbnail index: {index}, T: {thumbnails.Length}</color>");
-            if(thumbnails != null && index < thumbnails.Length){
+
+            // Thumbnail ayarlama
+            if (thumbnails != null && index < thumbnails.Length)
+            {
                 info.thumbnail = thumbnails[index];
-            }else{
+            }
+            else
+            {
                 info.thumbnail = thumbnailNotFound;
             }
 
-            if(noLevlDataFound){
-                info.isLocked = true;
+            // Ýlk seviye hariç tüm seviyeleri kilitli yap
+            if (noLevlDataFound)
+            {
+                info.isLocked = true;  // Varsayýlan olarak kilitli yap
                 string status = LOCKED_SIGN;
 
-                if(index == 0){
+                if (index == 0)
+                {  // Sadece ilk seviye kilitsiz olsun
                     info.isLocked = false;
                     status = UNLOCKED_SIGN;
                 }
 
                 rawString.Append(status + ' ');
 
-                Debug.Log($"<color=green>New Data: {rawString}</color>");
-
                 PlayerPrefs.SetString(UNLOCKED_LEVEL, rawString.ToString());
             }
-            else{
+            else
+            {
                 info.isLocked = isLocked[index];
             }
 
             levels.Add(info);
         }
     }
-    
+
     public void UnlockedLevel(int index){
         string[] data = PlayerPrefs.GetString(UNLOCKED_LEVEL).Split(" ");
         if(data[index].Equals(UNLOCKED_SIGN)) return;
@@ -157,7 +163,7 @@ class ObjectNameComparer : IComparer
         if(GUILayout.Button("Update Data"))
         {
             script.ResetData();
-            // script.AutoFillLevelData();
+            script.AutoFillLevelData();
         }
          
      }

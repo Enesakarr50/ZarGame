@@ -3,8 +3,7 @@ using UnityEngine.Events;
 
 public class Tile : MonoBehaviour
 {
-    #region  Variable
-    //------------------------------------//
+    
 #if UNITY_EDITOR
     [Header("Debug Only")]
     [SerializeField] bool isForVideoRecord;
@@ -34,14 +33,10 @@ public class Tile : MonoBehaviour
     const string BACK_COLOR = "_BgColor";
     const string ICON_COLOR = "_IconColor";
 
-    //------------------------------------//
-    #endregion
 
 
 
 
-    #region Unity Method
-    //------------------------------------//
     private void Awake() {
         tileRenderer = GetComponentInChildren<MeshRenderer>();
         sound = GetComponent<AudioSource>();
@@ -59,12 +54,7 @@ public class Tile : MonoBehaviour
     {
         // In game tile touch
         if(isActive) return;
-#if UNITY_EDITOR
-        if(isForVideoRecord){
-            particles.Play();
-            return;
-        }
-#endif
+
         else if(other.gameObject.CompareTag(tileType.ToString())){
             isActive = true;
 
@@ -76,29 +66,16 @@ public class Tile : MonoBehaviour
             sound.Play();
             onFill.Invoke();
             particles.Play();
+
+            
         }
     }
 
-    //------------------------------------//
-    #endregion
+    private void OnTriggerExit(Collider other)
+    {
+       
+    }
 
-
-
-
-    #region Public
-    //------------------------------------//
-    
-    
-
-    //------------------------------------//
-    #endregion
-
-
-
-
-    #region Private
-    //------------------------------------//
-    
     private void ActiveStatus(bool isActive){
         Color bg = isActive? collectedColor_bg : notCollectedColor_bg;
         Color icon = isActive? collectedColor_icon : notCollectedColor_icon;
@@ -118,8 +95,7 @@ public class Tile : MonoBehaviour
         tileRenderer.material.SetColor(ICON_COLOR, icon);
     }
 
-    //------------------------------------//
-    #endregion
+   
     
 }
 
@@ -131,5 +107,6 @@ public enum TileNumber{
     four,
     five,
     six,
-    deth
+    deth,
+    ice
 }

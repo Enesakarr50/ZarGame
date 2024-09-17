@@ -752,7 +752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950119720205251727, guid: 639186d30c18c314f9309a2385a30537, type: 3}
       propertyPath: moves
-      value: 5
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 6950119720205251727, guid: 639186d30c18c314f9309a2385a30537, type: 3}
       propertyPath: diceUpNumber
@@ -1187,10 +1187,6 @@ PrefabInstance:
     - target: {fileID: 409451537595654709, guid: 9e958fa4bd43eff42963a01b7984fc66, type: 3}
       propertyPath: m_Name
       value: Tile 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 409451537595654710, guid: 9e958fa4bd43eff42963a01b7984fc66, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 409451537595654710, guid: 9e958fa4bd43eff42963a01b7984fc66, type: 3}
       propertyPath: m_LocalPosition.x
