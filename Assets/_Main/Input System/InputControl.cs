@@ -205,15 +205,6 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""28caa3f0-6a3e-4173-bd6a-e171096965cc"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Scroll"",
                     ""type"": ""Value"",
                     ""id"": ""01998730-b06e-45f6-808c-1f52fa1a7f29"",
@@ -292,23 +283,60 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""97346e69-c134-4e58-a593-4fc5ff02c4d4"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""7a78a830-f40a-4098-a060-54f6dae864ac"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""d1de60f1-9d61-493e-b0bd-8438e2efc219"",
+            ""actions"": [
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""0e275145-974a-4bef-9fc0-872718c52024"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""6562bc2c-287f-44de-b063-25f3e68a01ec"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""02c4e7d3-9cae-44be-a32b-7216e660c772"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc8a41fb-aeb0-440e-86a6-46cc87c1ff5f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -330,8 +358,11 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         m_GameControl_Restart = m_GameControl.FindAction("Restart", throwIfNotFound: true);
         m_GameControl_FinishGame = m_GameControl.FindAction("FinishGame", throwIfNotFound: true);
         m_GameControl_Back = m_GameControl.FindAction("Back", throwIfNotFound: true);
-        m_GameControl_Look = m_GameControl.FindAction("Look", throwIfNotFound: true);
         m_GameControl_Scroll = m_GameControl.FindAction("Scroll", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
+        m_Camera_Rotate = m_Camera.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -468,7 +499,6 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameControl_Restart;
     private readonly InputAction m_GameControl_FinishGame;
     private readonly InputAction m_GameControl_Back;
-    private readonly InputAction m_GameControl_Look;
     private readonly InputAction m_GameControl_Scroll;
     public struct GameControlActions
     {
@@ -479,7 +509,6 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         public InputAction @Restart => m_Wrapper.m_GameControl_Restart;
         public InputAction @FinishGame => m_Wrapper.m_GameControl_FinishGame;
         public InputAction @Back => m_Wrapper.m_GameControl_Back;
-        public InputAction @Look => m_Wrapper.m_GameControl_Look;
         public InputAction @Scroll => m_Wrapper.m_GameControl_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_GameControl; }
         public void Enable() { Get().Enable(); }
@@ -505,9 +534,6 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
             @Scroll.started += instance.OnScroll;
             @Scroll.performed += instance.OnScroll;
             @Scroll.canceled += instance.OnScroll;
@@ -530,9 +556,6 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
             @Scroll.started -= instance.OnScroll;
             @Scroll.performed -= instance.OnScroll;
             @Scroll.canceled -= instance.OnScroll;
@@ -553,6 +576,60 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         }
     }
     public GameControlActions @GameControl => new GameControlActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+    private readonly InputAction m_Camera_Zoom;
+    private readonly InputAction m_Camera_Rotate;
+    public struct CameraActions
+    {
+        private @InputControl m_Wrapper;
+        public CameraActions(@InputControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
+        public InputAction @Rotate => m_Wrapper.m_Camera_Rotate;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void AddCallbacks(ICameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
+        }
+
+        private void UnregisterCallbacks(ICameraActions instance)
+        {
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
+        }
+
+        public void RemoveCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     public interface IDiceActions
     {
         void OnRight(InputAction.CallbackContext context);
@@ -567,7 +644,11 @@ public partial class @InputControl: IInputActionCollection2, IDisposable
         void OnRestart(InputAction.CallbackContext context);
         void OnFinishGame(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnZoom(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }

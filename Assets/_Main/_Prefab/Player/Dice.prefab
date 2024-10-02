@@ -932,6 +932,8 @@ MonoBehaviour:
   LastDir: {x: 0, y: 0, z: 0}
   isSliding: 0
   CanSlide: 1
+  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!54 &7037791650852165972
 Rigidbody:
   m_ObjectHideFlags: 0

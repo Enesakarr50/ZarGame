@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1041073398120236668, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.89503956
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041073398120236668, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041073398120236668, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.94716984
+      objectReference: {fileID: 0}
     - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
       propertyPath: done
       value: 1
@@ -23,6 +35,18 @@ PrefabInstance:
     - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
       propertyPath: tileType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: notCollectedColor_bg.b
+      value: 0.56078434
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: notCollectedColor_bg.g
+      value: 0.56078434
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
+      propertyPath: notCollectedColor_bg.r
+      value: 0.60784316
       objectReference: {fileID: 0}
     - target: {fileID: 1815670503836659180, guid: 9093415a599087f4faca7475afd25828, type: 3}
       propertyPath: notCollectedColor_icon.b

@@ -22,7 +22,7 @@ public class Dice : MonoBehaviour
 
     AudioSource sound;
     InputControl inputControl;
-    private CameraController cameraController;
+
 
     Vector2 startTouchPosition;
     Vector2 endTouchPosition;
@@ -37,7 +37,7 @@ public class Dice : MonoBehaviour
     {
         sound = GetComponent<AudioSource>();
         inputControl = new InputControl(); ;
-        cameraController = Camera.main.GetComponent<CameraController>();
+
     }
 
     private void Start()
@@ -60,55 +60,11 @@ public class Dice : MonoBehaviour
             if (!blockLeft) StartCoroutine(I_Roll(Vector3.left));
         };
 
-        ActivateCameraController();
-    }
 
-    private void Update()
-    {
-        DetectSwipe();
-    }
+    } 
 
-    private void ActivateCameraController()
-    {
-        if (cameraController != null)
-        {
-            cameraController.enabled = true;
-            Debug.Log("CameraController scripti aktif hale getirildi.");
-        }
-        else
-        {
-            Debug.LogWarning("CameraController bulunamadý.");
-        }
-    }
 
-    private void DetectSwipe()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            startTouchPosition = Mouse.current.position.ReadValue();
-        }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            endTouchPosition = Mouse.current.position.ReadValue();
-            Vector2 swipeDelta = endTouchPosition - startTouchPosition;
-
-            if (swipeDelta.magnitude >= minSwipeDistance)
-            {
-                swipeDelta.Normalize();
-                if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
-                {
-                    if (swipeDelta.x > 0 && !blockRight) StartCoroutine(I_Roll(Vector3.right));
-                    else if (swipeDelta.x < 0 && !blockLeft) StartCoroutine(I_Roll(Vector3.left));
-                }
-                else
-                {
-                    if (swipeDelta.y > 0 && !blockForward) StartCoroutine(I_Roll(Vector3.forward));
-                    else if (swipeDelta.y < 0 && !blockBack) StartCoroutine(I_Roll(Vector3.back));
-                }
-            }
-        }
-    }
 
     private Vector3 iceDirection = Vector3.zero; // Yönü saklamak için bir deðiþken
 
@@ -116,11 +72,11 @@ public class Dice : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ice") && !isSliding)
         {
-            StartCoroutine(SlideOnIce(LastDir,other.gameObject));
+            StartCoroutine(SlideOnIce(LastDir, other.gameObject));
 
-            
+
         }
-        
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -132,31 +88,31 @@ public class Dice : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-         if (other.gameObject.CompareTag("block left"))
-         {
+        if (other.gameObject.CompareTag("block left"))
+        {
             blockLeft = true;
-  
-         }
-            
-            
+
+        }
+
+
         else if (other.gameObject.CompareTag("block right"))
         {
             blockRight = true;
-          
+
         }
-            
+
         else if (other.gameObject.CompareTag("block forward"))
         {
             blockForward = true;
-            
+
         }
-            
+
         else if (other.gameObject.CompareTag("block back"))
         {
             blockBack = true;
-           
+
         }
-            
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -164,26 +120,26 @@ public class Dice : MonoBehaviour
         if (other.gameObject.CompareTag("block left"))
         {
             blockLeft = false;
-          
+
         }
 
 
         else if (other.gameObject.CompareTag("block right"))
         {
             blockRight = false;
-           
+
         }
 
         else if (other.gameObject.CompareTag("block forward"))
         {
             blockForward = false;
-           
+
         }
 
         else if (other.gameObject.CompareTag("block back"))
         {
             blockBack = false;
-           
+
         }
     }
 
@@ -267,7 +223,7 @@ public class Dice : MonoBehaviour
         diceMesh.transform.localScale = Vector3.zero;
     }
 
-    IEnumerator I_Roll(Vector3 direction)
+    public IEnumerator I_Roll(Vector3 direction)
     {
         if (isMoving || isSliding)
         {
@@ -302,16 +258,13 @@ public class Dice : MonoBehaviour
             yield return null;
         }
 
-        // After rotation, snap the x and z positions to the nearest integer value
+        // Snap the x and z positions to the nearest integer value
         Vector3 finalPosition = transform.position;
-        finalPosition.x = Mathf.Round(finalPosition.x); // X eksenini en yakýn 1 birime yuvarla
-        finalPosition.z = Mathf.Round(finalPosition.z); // Z eksenini en yakýn 1 birime yuvarla
+        finalPosition.x = Mathf.Round(finalPosition.x); // Snap X to nearest integer
+        finalPosition.z = Mathf.Round(finalPosition.z); // Snap Z to nearest integer
 
         // Apply the new snapped position
         transform.position = finalPosition;
-
-
-
 
         isMoving = false;
     }
