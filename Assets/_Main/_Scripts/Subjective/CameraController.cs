@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, zoomRange.x, zoomRange.y); // Zoom aralýðýný sýnýrla
 
         // Mouse sol tuþuna basýlýyorsa rotasyonu etkinleþtir
-        if (Mouse.current.leftButton.isPressed)
+        if (Mouse.current.rightButton.isPressed)
         {
             isRotating = true;
         }

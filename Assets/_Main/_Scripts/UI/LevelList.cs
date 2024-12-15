@@ -15,33 +15,33 @@ public class LevelList : SingletonBehaviour<LevelList>
     int count = 1;
 
     // public LevelSO[] levels_so;
-    public LevelData_SO levelData;
-
+   // public LevelData_SO levelData;
+   /*
     public int Length
     {
         get {
             return levelData.levels.Count;
         }
     }
-
+   */
 
     private void Awake() {
         toggleGroup = GetComponent<SmartToggleGroup>();
 
         // levelData = Resources.Load<LevelData_SO>("Level/Level Data");
         // levelData = new LevelData_SO();
-        levelData = ScriptableObject.CreateInstance<LevelData_SO>();
+       // levelData = ScriptableObject.CreateInstance<LevelData_SO>();
 
         startButton.onClick.AddListener(() => {
             var card = toggleGroup.Selected.GetComponent<Card>();
 
-            GameManager.Instance.LoadLevel(card.Id-1, $"Level {card.Id}");
+            //GameManager.Instance.LoadLevel(card.Id-1, $"Level {card.Id}");
         });
     }
-
+    /*
     private void Start() {
         Toggle lastUnlockedLevel = null;
-
+        
         foreach(var level in levelData.levels){
             Toggle t = Instantiate(pr_Card, transform).GetComponent<Toggle>();
             toggleGroup.Add(t);
@@ -58,10 +58,10 @@ public class LevelList : SingletonBehaviour<LevelList>
         if(lastUnlockedLevel != null)
         lastUnlockedLevel.isOn = true;
     }
-
+    */
     public void UnlockIfLocked(int index){
         // Update unlock in db
-        levelData.UnlockedLevel(index);
+      //  levelData.UnlockedLevel(index);
 
         // reflect changes on UI
         cards[index].UnlockCardIfNot();

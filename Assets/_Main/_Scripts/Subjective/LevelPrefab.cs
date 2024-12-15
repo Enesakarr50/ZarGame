@@ -11,6 +11,8 @@ public class LevelPrefab : MonoBehaviour
     [HideInInspector] public Transform playerStart;
     [Header("Config")]
     [SerializeField] public int moves;
+    [SerializeField] public int CurrentLevelIndex;
+    public int totalEndTiles; // Elle girilecek EndTile sayýsý
     // [Range(1,6)]
     // [SerializeField] public int diceUpNumber = 1;
 
@@ -36,7 +38,21 @@ public class LevelPrefab : MonoBehaviour
     //------------------------------------//
     #endregion
 
+    private void Start()
+    {
+        // Tüm "EndTile" taglý objeleri say
+        totalEndTiles = GameObject.FindGameObjectsWithTag("EndTile").Length;
+        Debug.Log("Total EndTile: " + totalEndTiles);
+    }
 
+    public void EndTileCompleted()
+    {
+        LevelLoader levelLoader = FindObjectOfType<LevelLoader>();
+        if (levelLoader != null)
+        {
+            levelLoader.EndTileCompleted();
+        }
+    }
 
 
     #region  Unity Method

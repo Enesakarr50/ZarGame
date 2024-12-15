@@ -8,11 +8,14 @@ public class TileMovable : MonoBehaviour
 
     private Material originalMaterial;
     private Color originalColor;
+    private LevelLoader levelLoader;
 
     private Dice diceScript; // Reference to the Dice script component
 
     private void Start()
     {
+        levelLoader = FindObjectOfType<LevelLoader>(); 
+    
         // Store the original material and color
         if (objectRenderer != null)
         {
@@ -123,6 +126,15 @@ public class TileMovable : MonoBehaviour
         {
             Debug.LogError("Dice script not assigned.");
             return;
+        }
+
+        // Burada hareket iþlemi yapýlýr
+        Debug.Log("Tile hareket etti.");
+
+        // Hareket sýnýrýný azalt
+        if (levelLoader != null)
+        {
+            levelLoader.DecreaseMoveLimit();
         }
 
         switch (gameObject.name)

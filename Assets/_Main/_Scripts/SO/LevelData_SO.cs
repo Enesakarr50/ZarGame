@@ -1,4 +1,5 @@
-using System.Collections;
+/*
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -122,7 +123,7 @@ public class LevelData_SO : ScriptableObject
 [Serializable]
 public class LevelInfo
 {
-    /* [HideInInspector]  */public int id;
+    public int id;
     public Sprite thumbnail;
     public GameObject prefab;
     public bool isLocked = true;
@@ -169,3 +170,4 @@ class ObjectNameComparer : IComparer
      }
  }
  #endif
+*/

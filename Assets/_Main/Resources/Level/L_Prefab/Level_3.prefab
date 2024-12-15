@@ -529,6 +529,14 @@ PrefabInstance:
       propertyPath: infinite
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6950119720205251727, guid: 639186d30c18c314f9309a2385a30537, type: 3}
+      propertyPath: totalEndTiles
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950119720205251727, guid: 639186d30c18c314f9309a2385a30537, type: 3}
+      propertyPath: CurrentLevelIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7145775060759470836, guid: 639186d30c18c314f9309a2385a30537, type: 3}
       propertyPath: m_DynamicOccludee
       value: 0
