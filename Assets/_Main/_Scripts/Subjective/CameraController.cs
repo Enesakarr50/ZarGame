@@ -9,19 +9,27 @@ public class CameraController : MonoBehaviour
     public Vector2 zoomRange = new Vector2(2.0f, 10.0f); // Zoom sýnýrlarý (orthographicSize için)
 
     private float currentX = 0.0f; // Yatay rotasyon
-    private float currentY = 10.0f; // Dikey rotasyon (Baþlangýç deðerini 10 yaptýk)
+    private float currentY = 30.0f; // Dikey rotasyon (Baþlangýç deðerini 10 yaptýk)
     private bool isRotating = false; // Mouse sürükleme kontrolü
     private Camera cam; // Kamera referansý
+
+    public float initialRotationX = 30.0f; // Baþlangýç yatay rotasyonu
+    public float initialRotationY = 30.0f; // Baþlangýç dikey rotasyonu
 
     void Start()
     {
         cam = GetComponent<Camera>();
         cam.orthographic = true; // Kamerayý ortografik modda kullanýyoruz
 
+        // Baþlangýç rotasyonunu ayarla
+        currentX = initialRotationX;
+        currentY = initialRotationY;
+
         // Kameranýn baþlangýç pozisyonunu ayarlýyoruz
-        transform.position = new Vector3(-0, 8f, -5f);
-      
-        transform.LookAt(target); // Baþlangýçta hedefe bakmasýný saðlýyoruz
+        transform.position = new Vector3(0, 0f, 0f);
+
+        // Baþlangýçta hedefe bakmasýný saðlýyoruz
+        transform.LookAt(target);
     }
 
     void Update()
@@ -45,8 +53,8 @@ public class CameraController : MonoBehaviour
         if (isRotating)
         {
             currentX += Mouse.current.delta.ReadValue().x * rotationSpeed * Time.deltaTime;
-            currentY += Mouse.current.delta.ReadValue().y * rotationSpeed *-1 * Time.deltaTime;
-            currentY = Mathf.Clamp(currentY, 10, 80); // X rotasyonunu 10 ile 80 derece arasýnda sýnýrla
+            currentY += Mouse.current.delta.ReadValue().y * rotationSpeed * -1 * Time.deltaTime;
+            currentY = Mathf.Clamp(currentY, 10, 85); // X rotasyonunu 10 ile 90 derece arasýnda sýnýrla
         }
 
         // Kamerayý hedefe göre pozisyonla

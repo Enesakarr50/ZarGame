@@ -21,7 +21,7 @@ public class Tile : MonoBehaviour
     [SerializeField] Color collectedColor_icon;
     [SerializeField] Color collectedColor_bg;
     public bool isActive;
-    public bool isEndTileReached = false;
+
 
     [HideInInspector]
     public UnityEvent onFill;

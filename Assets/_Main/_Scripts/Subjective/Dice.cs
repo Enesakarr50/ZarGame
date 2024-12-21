@@ -16,7 +16,6 @@ public class Dice : MonoBehaviour
     [SerializeField] bool blockRight;
     [SerializeField] bool blockForward;
     [SerializeField] bool blockBack;
-    private LevelLoader levelLoader;
 
     [HideInInspector]
     public UnityEvent onPlayerMove;
@@ -44,9 +43,6 @@ public class Dice : MonoBehaviour
     private void Start()
     {
         inputControl.Dice.Enable();
-
-        levelLoader = FindObjectOfType<LevelLoader>();
-
 
         inputControl.Dice.Forward.performed += (c) => {
             if (!blockForward) StartCoroutine(I_Roll(Vector3.forward));
@@ -80,8 +76,6 @@ public class Dice : MonoBehaviour
 
 
         }
-
-       
 
     }
     private void OnCollisionEnter(Collision collision)

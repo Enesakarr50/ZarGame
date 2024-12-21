@@ -14,18 +14,17 @@ public class Card : MonoBehaviour
 
     Toggle toggle;
     TextMeshProUGUI levelNumber;
-    //LevelInfo levelData;
+    LevelInfo levelData;
     Image notSelectedOutline;
     RectTransform rect;
     // LineRenderer deshLine;
 
-    /*
     public int Id{
         get{
             return levelData.id;
         }
     }
-    */
+
     private void Awake() {
         levelNumber = GetComponentInChildren<TextMeshProUGUI>();
         toggle = GetComponent<Toggle>();
@@ -52,7 +51,6 @@ public class Card : MonoBehaviour
         }
     }
 
-    /*
     public void Initialize(LevelInfo levelData){
         this.levelData = levelData;
 
@@ -61,9 +59,9 @@ public class Card : MonoBehaviour
         toggle.interactable = !levelData.isLocked;
         thumbnail.sprite = levelData.thumbnail;
     }
-    */
+
     public void UnlockCardIfNot(){
-       // levelData.isLocked = false;
+        levelData.isLocked = false;
         blackout.SetActive(false);
         toggle.interactable = true;
         toggle.isOn = true;
