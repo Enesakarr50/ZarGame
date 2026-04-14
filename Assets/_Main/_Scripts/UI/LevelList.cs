@@ -28,15 +28,33 @@ public class LevelList : SingletonBehaviour<LevelList>
     private void Awake() {
         toggleGroup = GetComponent<SmartToggleGroup>();
 
-        // levelData = Resources.Load<LevelData_SO>("Level/Level Data");
-        // levelData = new LevelData_SO();
-        levelData = ScriptableObject.CreateInstance<LevelData_SO>();
+        levelData = Resources.Load<LevelData_SO>("Level/Level Data");
+        if (levelData == null) {
+            Debug.LogError("LevelList: Resources.Load failed for 'Level/Level Data'.");
+            levelData = ScriptableObject.CreateInstance<LevelData_SO>();
+            levelData.ResetData();
+        }
 
-        startButton.onClick.AddListener(() => {
+        if (startButton != null && startButton.GetComponent<StartButtonRaycastGuard>() == null)
+            startButton.gameObject.AddComponent<StartButtonRaycastGuard>();
+
+        startButton.onClick.AddListener(StartSelectedLevel);
+    }
+
+    /// <summary>Ana menü Start/Play: seçili seviye veya 1. seviye. Inspector veya kod tarafından çağrılabilir.</summary>
+    public void StartSelectedLevel() {
+        if (toggleGroup == null || GameManager.Instance == null || levelData == null) return;
+
+        if (toggleGroup.Selected != null) {
             var card = toggleGroup.Selected.GetComponent<Card>();
+            if (card != null) {
+                GameManager.Instance.LoadLevel(card.Id - 1, $"Level {card.Id}");
+                return;
+            }
+        }
 
-            GameManager.Instance.LoadLevel(card.Id-1, $"Level {card.Id}");
-        });
+        if (levelData.levels.Count > 0)
+            GameManager.Instance.LoadLevel(0, "Level 1");
     }
 
     private void Start() {

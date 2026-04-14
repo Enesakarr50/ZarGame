@@ -1,18 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Scene geçiþi için
-using UnityEngine.UI; // UI bileþenlerini kullanabilmek için
+using UnityEngine.SceneManagement;
 
 public class MainMenuButton : MonoBehaviour
 {
+    const string MainGameSceneName = "_Main";
 
-
-  
-
-    // Play butonuna týklandýðýnda yapýlacak iþlemler
-    public void OnPlayButtonClicked()
-    {
-        // Yeni bir sahneye geçiþ yap (bu örnekte sahne "Game" olarak varsayýlmýþtýr)
-        SceneManager.LoadScene("_Main"); // Burada "Game" sahnesi, mevcut oyun sahnenizi temsil etmeli
+    /// <summary>_Main içindeyken oyunu ba?lat?r; ba?ka sahneden _Main'e yükler.</summary>
+    public void OnPlayButtonClicked() {
+        var s = SceneManager.GetActiveScene();
+        if (s.name == MainGameSceneName || s.buildIndex == 0) {
+            LevelList.Instance?.StartSelectedLevel();
+            return;
+        }
+        SceneManager.LoadScene(MainGameSceneName);
     }
 
     public void OnMainMenuButtonClicked()
